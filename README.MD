@@ -6,7 +6,9 @@ The .bash_functions file is placed in the home directory and sourced by placing 
 
 
 if [ -f ~/.bash_functions ]; then
+
     . ~/.bash_functions
+
 fi
 
 
