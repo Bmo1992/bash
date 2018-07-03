@@ -1,11 +1,13 @@
 #!/bin/bash
 
-# Author: BMo
+# Author: bmo
 # - Program demonstrates the distances between the planets in our solar 
-#   system.
+#   system. { not perfectly to scale but very rough }
 #   Each new line printed represents 1/10th of an AU { This is roughly 
 #   equivilant of 9 million miles }
-#   an AU is the average distance between the Sun and the Earth
+#   The AU ( Astronomical Unit ) is the average distance between the Sun and the Earth
+#   The distance for each body is based off it's Semi-major axis 
+#   Note that the semi-major axis is NOT the average between aphelion and perihelion 
 
 lineIndex=1
 
