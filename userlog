@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# Name        
+# Author      : Brandon Morgan
+# Date        : 06/29/2017
+#
+# Description : Check users last login time and real name
+
+
+if [ $UID != 0 ];
+then
+    echo "You must have root privilage to use this $USER"
+fi
+[ "$UID" -eq 0 ] || exec sudo "$0" "$@"
+
+
+
+USERS=( $(ls /home/*) )
+
+# Parse /etc/passwd and lastlog for user and log in info
+for ((i=0;$i < ${#USERS[@]};i++)); do
+    cat /etc/passwd | awk -F : '{print $1, $5}' | grep ${USERS[$i]} >> /tmp/checkuser.txt
+    lastlog | grep ${USERS[$i]} >> /tmp/checklogin.txt
+done
+
+# join the files together
+join /tmp/checklogin.txt /tmp/checkuser.txt > /tmp/finalcheck.txt
+
+# reformat it all so it looks nice
+info () 
+{
+    echo "User Day Mon Date Time Year Fname Lname"
+    echo
+    cat /tmp/finalcheck.txt \
+    | awk '{print $1, $3, $4, $5, $6, $8, $9, $10}' 
+}
+
+info | column -t
+
+# remove all the files from tmp
+rm /tmp/checkuser.txt
+rm /tmp/checklogin.txt
+rm /tmp/finalcheck.txt
